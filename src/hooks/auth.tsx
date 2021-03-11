@@ -4,6 +4,7 @@ import api from '../services/api';
 interface IUser {
   id: string;
   name: string;
+  email: string;
   avatar_url: string;
 }
 
@@ -16,6 +17,7 @@ interface IAuthContext {
   user: IUser;
   signIn(credentials: ISignInCredentials): Promise<void>;
   signOut(): void;
+  updateUser(user: IUser): void;
 }
 
 interface IAuthState {
@@ -59,10 +61,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@GoBarber:token');
     localStorage.removeItem('@GoBarber:user');
     setData({} as IAuthState)
-  }, [])
+  }, []);
+
+  const updateUser = useCallback((user: IUser) => {
+    setData({ token: data.token, user });
+  }, [setData, data])
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
