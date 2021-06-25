@@ -183,7 +183,7 @@ const Dashboard: React.FC = () => {
           <Section>
             <strong>Tarde</strong>
 
-            {morningAppointments.length === 0 && <p>Nenhum agendamento</p>}
+            {afternoonAppointments.length === 0 && <p>Nenhum agendamento</p>}
 
             {afternoonAppointments.map(appointment => (
               <Appointment key={appointment.id}>
